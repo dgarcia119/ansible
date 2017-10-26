@@ -1,5 +1,5 @@
 ---
-- hosts: testing
+- hosts: production
   user: root
 
 
@@ -29,4 +29,4 @@
        dest=/home/vm1/edg
        force=yes
        recursive=no
-       version=testing         
+       version=master         
