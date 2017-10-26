@@ -1,0 +1,32 @@
+---
+- hosts: testing
+  user: root
+
+
+  vars:
+    - homeDir: /home/vm1
+    - appDir : edg
+    - repo: edg
+    - account: dgarcia119
+    - privateKey: /home/vm1/.ssh/id_rsa
+
+
+  tasks:
+  - name: Install Packages
+    apt: name={{ item }} update_cache=yes state=latest
+    with_items:
+      - build-essential
+      - nodejs-legacy
+      - git
+      - mcrypt
+      - curl
+
+  - name: Create APP Directory
+    file: path={{homeDir}}/{{appDir}} state=directory
+
+  - name: App | Cloning repos + submodules
+    git: repo=https://github.com/dgarcia119/edg.git
+       dest=/home/vm1/edg
+       force=yes
+       recursive=no
+       version=testing         
