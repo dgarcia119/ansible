@@ -29,4 +29,12 @@
        dest=/home/vm1/edg
        force=yes
        recursive=no
-       version=master         
+       version=master   
+
+  - shell: "(pkill -f app_node &)"
+    async: 10
+    poll: 0
+
+  - shell: "(bash -c 'exec -a app_node node /home/vm1/edg/index.js' &)"
+    async: 10
+    poll: 0
