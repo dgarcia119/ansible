@@ -1,0 +1,40 @@
+---
+- hosts: development
+  user: root
+
+
+  vars:
+    - homeDir: /home/vm1
+    - appDir : edg
+    - repo: edg
+    - account: dgarcia119
+    - privateKey: /home/vm1/.ssh/id_rsa
+
+
+  tasks:
+  - name: Install Packages
+    apt: name={{ item }} update_cache=yes state=latest
+    with_items:
+      - build-essential
+      - nodejs-legacy
+      - git
+      - mcrypt
+      - curl
+
+  - name: Create APP Directory
+    file: path={{homeDir}}/{{appDir}} state=directory
+
+  - name: App | Cloning repos + submodules
+    git: repo=https://github.com/dgarcia119/edg.git
+       dest=/home/vm1/edg
+       force=yes
+       recursive=no
+       version=development
+
+  - shell: "(pkill -f app_node &)"
+    async: 10
+    poll: 0
+
+  - shell: "(bash -c 'exec -a app_node node /home/vm1/edg/index.js' &)"
+    async: 10
+    poll: 0
