@@ -2,7 +2,6 @@
 - hosts: testing
   user: root
 
-
   vars:
     - homeDir: /home/vm1
     - appDir : edg
