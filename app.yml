@@ -20,7 +20,12 @@
       - git
       - mcrypt
       - curl
-
+      - bind9
+  
+  - service:
+      name: bind9
+      state: started
+  
   - name: Create APP Directory
     file: path={{homeDir}}/{{appDir}} state=directory
 
